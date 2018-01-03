@@ -1,14 +1,48 @@
-//Python uses the statement spss.submit to pass through multiple SPSS statements at once separated by commas, always in quotes and ending in a period
+#basic example of retrieving output
+
+DATA LIST FREE / ID X.
+BEGIN DATA
+1 5
+2 6
+3 7
+END DATA.
+DATASET NAME Orig.
+
+BEGIN PROGRAM Python.
+import spss, spssdata
+alldata = spssdata.Spssdata().fetchall()
+print alldata
+#this just grabs all of the data
+END PROGRAM.
+
+*Make your mean in SPSS syntax.
+AGGREGATE OUTFILE=* MODE=ADDVARIABLES
+  /BREAK
+  /MeanX = MEAN(X).
+
+BEGIN PROGRAM Python.
+var = ["MeanX"]
+alldata2 = spssdata.Spssdata(var).fetchone()
+print alldata2
+#This just grabs the mean of the variable you created
+END PROGRAM.
+
+
+
+
+#Other example
+
+#Python uses the statement spss.submit to pass through multiple SPSS statements at once separated by commas, always in quotes and ending in a period
 BEGIN PROGRAM.
 Import spss
 Spss.submit( [“GET FILE = ‘c:/mydata.sav’ .” ,  “PRINT/ALL.” , “EXECUTE.” ])
 END PROGRAM.
 
-//Here we use Python to loop through different SPSS variables
+#Here we use Python to loop through different SPSS variables
 BEGIN PROGRAM.
 Import spss
 Spss.submit (“GET FILE = ‘c:/mydata.sav’.”)
-ScaleList = [] //holds all the variable names of all scale variables found in the data set
+ScaleList = [] #holds all the variable names of all scale variables found in the data set
 For i in range (spss.GetVariableCount ()):
 If (spss.MetVariableMeasurementLevel (i) = =’scale’):
 ScaleList.append (spss.GetVariableName (i))
