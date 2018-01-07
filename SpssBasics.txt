@@ -1,0 +1,8 @@
+At this point we've taken a look at all SPSS’ main windows. 
+
+First, the Data Editor window is where we inspect the two main component of “data”: the data values and their dictionary information. 
+
+Second, the Syntax Editor window is the window from which we run commands for opening, editing, analyzing and saving data. 
+
+
+Third, SPSS Output Viewer window is where the output goes.
