@@ -21,6 +21,8 @@ Extensive manipulation of the Output tree, including customizing pivot tables, e
 Trigger SPSS dialog boxes
 Manage SPSS Server connections
 
+
+
 Scripts are very akin to SaxBasic, which lived in a separate window (File | New | Script) and was run only via the SCRIPT command (if you are on Windows). Well, same limitations here. Accd to the docs (PDFs and help file), these Python Scripts cannot be used inside a Syntax file ala Begin Program / End Program (we’ll talk more about this below): “Python scripts can be run from Utilities>Run Script or from the Python editor launched from SPSS (accessed from File>Open>Script).” They don’t mention the SCRIPT command, which is kind of a huge omission. I understand that its Windows only, but that is a huge part of the SPSS userbase.
 
 (Note: Though it is undocumented here, some comments from SPSS folks imply that the SCRIPT command will be improved in future versions, is an acceptable way to call Python, and may even allow parameter passing in later versions)
