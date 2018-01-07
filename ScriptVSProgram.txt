@@ -1,0 +1,31 @@
+There are actually 2 types of things you can do with Python inside of SPSS:
+
+Python Programs and
+Python Scripts
+What is the difference? Well, a Python Program can be inline with your SPSS syntax, just like a macro. You can do the following (cribbed liberally from Raynald’s book):
+
+custom syntax creation (like macros)
+custom variable creation (including Macro Variables) as well as case addition and deletion
+completely new dataset
+access dictionary information as well as data
+some procedure output
+error codes from syntax commands to be able to gracefully degrade
+create output of pivot tables and text blocks (and, if you want to use OMS syntax, you can export output in various formats)
+Sounds like a lot, right? Well, not quite. You don’t have full access to the output tree, so massive reshuffling of output is not available. Since that’s about half my time with SPSS, it is disappointing that this is not exposed. But honestly, you will probably never write another macro again. The only thing you need macro variables for is to pass information out of the Python portion back into regular syntax (Raynald describes this technique).
+
+These programs use the phrase “import spss” as one of their first lines, which is the library SPSS coded up to expose their functionality to Python.
+
+Ok, so what about the Python Script? These use a different library, the “import SpssClient” library. These focus on the stuff left out above, specifically:
+
+Extensive manipulation of the Output tree, including customizing pivot tables, exports in HTML, text, XML, deletion or reordering of the tree, etc. (some exporting can be done in the Program side via OMS)
+Trigger SPSS dialog boxes
+Manage SPSS Server connections
+
+Scripts are very akin to SaxBasic, which lived in a separate window (File | New | Script) and was run only via the SCRIPT command (if you are on Windows). Well, same limitations here. Accd to the docs (PDFs and help file), these Python Scripts cannot be used inside a Syntax file ala Begin Program / End Program (we’ll talk more about this below): “Python scripts can be run from Utilities>Run Script or from the Python editor launched from SPSS (accessed from File>Open>Script).” They don’t mention the SCRIPT command, which is kind of a huge omission. I understand that its Windows only, but that is a huge part of the SPSS userbase.
+
+(Note: Though it is undocumented here, some comments from SPSS folks imply that the SCRIPT command will be improved in future versions, is an acceptable way to call Python, and may even allow parameter passing in later versions)
+
+So, why the two? If you think about it, these Script are the “interface/windowsy” side of the system, while the Programs are more about actual data processing. Or, you could say that the Programs are focused on the “back end”, while the Scripts modify the “front end”, the “client”. This allegory falls apart if you push it too hard, but for most cases, it works. See more at SPSS Scripting Facility > Scripting with the
+Python Programming Language in the SPSS Help system.
+
+So, in short: Programs are Python in your Syntax file, ala macros. Scripts are Python that run outside of your Syntax file, either by manual calls (File Run) or SCRIPT commands. I suspect there is no real reason for this split other than the way SPSS is programmed. I can only hope they eliminate this arbitrary distinction and confusion at some point in the future. In the meantime, Programs are what you will do most of the time, and Scripts will be the way to make things pretty.
