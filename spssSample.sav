@@ -1,52 +1,37 @@
 #basic example of retrieving output
+#first example, this worked in the spss syntax editor screen then output data in the spss output/viewer screen
 
-DATA LIST FREE / ID X.
+* Encoding: UTF-8.
+* We start by creating some test data.
+DATA LIST /VAR1 1-2 VAR2 4-5.
 BEGIN DATA
-1 5
-2 6
-3 7
+23 11
+48 15
+62 17
 END DATA.
-DATASET NAME Orig.
-
-BEGIN PROGRAM Python.
-import spss, spssdata
-alldata = spssdata.Spssdata().fetchall()
-print alldata
-#this just grabs all of the data
-END PROGRAM.
-
-*Make your mean in SPSS syntax.
-AGGREGATE OUTFILE=* MODE=ADDVARIABLES
-  /BREAK
-  /MeanX = MEAN(X).
-
-BEGIN PROGRAM Python.
-var = ["MeanX"]
-alldata2 = spssdata.Spssdata(var).fetchone()
-print alldata2
-#This just grabs the mean of the variable you created
-END PROGRAM.
-
-
-
-
-#Other example
-
-#Python uses the statement spss.submit to pass through multiple SPSS statements at once separated by commas, always in quotes and ending in a period
+* The Python block starts here.
 BEGIN PROGRAM.
-Import spss
-Spss.submit( [“GET FILE = ‘c:/mydata.sav’ .” ,  “PRINT/ALL.” , “EXECUTE.” ])
+#Import the SPSS and SPSS Client modules.
+import spss, SpssClient
+ 
+# Start the SPSS Client. Always do this first.
+SpssClient.StartClient()
+ 
+# Submit some syntax string to SPSS.
+spss.Submit("FREQ var1.")
 END PROGRAM.
 
-#Here we use Python to loop through different SPSS variables
-BEGIN PROGRAM.
-Import spss
-Spss.submit (“GET FILE = ‘c:/mydata.sav’.”)
-ScaleList = [] #holds all the variable names of all scale variables found in the data set
-For i in range (spss.GetVariableCount ()):
-If (spss.MetVariableMeasurementLevel (i) = =’scale’):
-ScaleList.append (spss.GetVariableName (i))
-If (len(ScaleList)):
-Spss.submit (“Descriptives  “  + “ “.join(ScaleList) + “.”)
+BEGIN   PROGRAM.
+import spss
+import SpssClient
+SpssClient.StartClient()
+i=0
+while i<20:
+   spss.Submit("FREQ VAR1.")
+   i+=1
 END PROGRAM.
+
+
+
+
 
