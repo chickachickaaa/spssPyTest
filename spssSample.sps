@@ -33,6 +33,6 @@ while i<20:
 END PROGRAM.
 
 
-
+*used this tutorial https://datascienceprojects.wordpress.com/2016/05/23/tutorial-using-python-programming-in-spss/
 
 
