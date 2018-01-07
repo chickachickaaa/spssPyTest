@@ -1,5 +1,6 @@
 #basic example of retrieving output
 #first example, this worked in the spss syntax editor screen then output data in the spss output/viewer screen
+#this is a python program in spss syntax, next we will try a python script in spss syntax, they offer different python functionalities and have to be separated due to how SPSS is configured
 
 * Encoding: UTF-8.
 * We start by creating some test data.
